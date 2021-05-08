@@ -89,16 +89,22 @@ def default_print():
                         temp_dict_file.append(variable)
                 elif state2 == "2":
                     show_info()
-                    id = int(input("Enter user id: "))
-                    temp_user = temp_dict_file.pop(id)
-                    print("User was successfully deleted!")
+                    try:
+                        id = int(input("Enter user id: "))
+                        temp_user = temp_dict_file.pop(id)
+                        print("User was successfully deleted!")
 
-                    del temp_user
+                        del temp_user
+                    except:
+                        print("Error occurred! Try again")
 
                 elif state2 == "3":
                     show_info()
                 elif state2 == "4":
+
                     break
+                else:
+                    print("Error occurred! Try again!")
 
         for obj in temp_dict_file:
             if obj.password == password1 and obj.login == login1:
@@ -107,23 +113,34 @@ def default_print():
                     user_menu_info()
                     state1 = input()
                     if state1 == "1":
-                        amount = int(input("Enter Deposit amount: "))
-                        obj.deposit(amount)
+                        try:
+                            amount = int(input("Enter Deposit amount: "))
+                            obj.deposit(amount)
+                        except:
+                            print("Error occurred! Try again!")
 
                     elif state1 == "2":
-                        amount = int(input("Enter Withdraw amount: "))
-                        obj.withdraw(amount)
+                        try:
+                            amount = int(input("Enter Withdraw amount: "))
+                            obj.withdraw(amount)
+                        except:
+                            print("Error occurred! Try again!")
 
                     elif state1 == "3":
                         obj.view_balance()
 
                     elif state1 == "4":
                         break
+                    else:
+                        print("Error occurred! Try again!")
 
         default_print()
 
     elif state == "3":
         print("Session is cancelled")
+    else:
+        print("Error occurred! Try again!")
+        default_print()
 
 
 def user_menu_info():
