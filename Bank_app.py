@@ -1,6 +1,7 @@
-import pickle
-from Bank import Bank
+import os
+from BankUser import BankUser
 from MenuManagement import MenuManagement
+from FileManagement import *
 
 
 def default_print():
@@ -9,6 +10,7 @@ def default_print():
     if state == "1":
         MenuManagement.about_info()
         MenuManagement.static_menu()
+
         default_print()
 
     elif state == "2":
@@ -27,20 +29,20 @@ def default_print():
                     login = input("Enter login: ")
                     password = input("Enter password: ")
                     variable = input("Id: ")
-                    variable = Bank(name, second_name, age,
-                                    gender, login, password)
+                    variable = BankUser(name, second_name, age,
+                                        gender, login, password)
 
-                    for obj in temp_dict_file:
+                    for obj in FileManagement.temp_dict_file:
                         if obj.name == variable.name and obj.password == variable.password and obj.login == variable.login:
                             print("Item already exist")
                             exist = True
                     if exist == False:
-                        temp_dict_file.append(variable)
+                        FileManagement.temp_dict_file.append(variable)
                 elif state2 == "2":
-                    show_info()
+                    FileManagement.show_info()
                     try:
                         id = int(input("Enter user id: "))
-                        temp_user = temp_dict_file.pop(id)
+                        temp_user = FileManagement.temp_dict_file.pop(id)
                         print("User was successfully deleted!")
 
                         del temp_user
@@ -48,14 +50,14 @@ def default_print():
                         print("Error occurred! Try again")
 
                 elif state2 == "3":
-                    show_info()
+                    FileManagement.show_info()
                 elif state2 == "4":
 
                     break
                 else:
                     print("Error occurred! Try again!")
 
-        for obj in temp_dict_file:
+        for obj in FileManagement.temp_dict_file:
             if obj.password == password1 and obj.login == login1:
                 print("Login was successful!")
                 while True:
@@ -96,20 +98,14 @@ def default_print():
         default_print()
 
 
-def show_info():
-    i = 0
-    for obj in config_dictionary:
-        print(i, ":", obj.name, "-", obj.second_name, "|Gender:",
-              obj.gender, "|Balance:", obj.balance)
-        i += 1
-
-
-with open('config.dictionary', 'rb') as config_dictionary_file:
-    config_dictionary = pickle.load(config_dictionary_file)
-temp_dict_file = config_dictionary
-
-MenuManagement.static_menu()
-default_print()
-with open('config.dictionary', 'wb') as config_dictionary_file:
-
-    pickle.dump(temp_dict_file, config_dictionary_file)
+if not os.path.exists("config.dictionary"):
+    FileManagement.dump_file()
+    FileManagement()
+    MenuManagement.static_menu()
+    default_print()
+    FileManagement.dump_file()
+else:
+    FileManagement()
+    MenuManagement.static_menu()
+    default_print()
+    FileManagement.dump_file()
