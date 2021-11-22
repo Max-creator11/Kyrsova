@@ -4,6 +4,7 @@ from User import User
 class BankUser(User):
     def __init__(self, name, second_name, age, gender, login, password):
         super().__init__(name, second_name, age, gender, login, password)
+        BankUser.exist = False
         self.balance = 0
 
     def deposit(self, amount):

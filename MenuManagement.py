@@ -1,4 +1,3 @@
-
 class MenuManagement():
     @staticmethod
     def about_info():
